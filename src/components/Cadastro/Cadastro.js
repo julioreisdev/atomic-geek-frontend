@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import logo from "../../assets/img/logo.gif";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import dadosUser from "../Context/Context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import LoaderBotao from "../Loader/LoaderBotao";
 
 export default function Cadastro() {
   const {
@@ -18,13 +20,37 @@ export default function Cadastro() {
     setRua,
   } = useContext(dadosUser);
 
+  const [mensagemErro, setMesangemErro] = useState("");
+  const [tap, setTap] = useState(false);
+  const navigate = useNavigate();
+
+  function submit(e) {
+    e.preventDefault();
+    setTap(true);
+    const promise = axios.post("http://localhost:5000/register", {
+      nome,
+      email,
+      senha,
+      cep,
+      rua,
+    });
+    promise
+      .then((res) => {
+        navigate("/login");
+      })
+      .catch((err) => {
+        setMesangemErro(err.response.data);
+        setTap(false);
+      });
+  }
+
   return (
     <Container>
       <Logo>
         <img src={logo} alt="Logo Atomic Geek" />
         <h1>Atomic Geek</h1>
       </Logo>
-      <form>
+      <form onSubmit={(e) => submit(e)}>
         <input
           id="nome"
           name="nome"
@@ -70,7 +96,8 @@ export default function Cadastro() {
           value={rua}
           onChange={(e) => setRua(e.target.value)}
         />
-        <button>Cadastrar</button>
+        <p>{mensagemErro}</p>
+        <button>{tap ? <LoaderBotao w="40" h="20" /> : "Cadastrar"}</button>
       </form>
       <Link to={"/login"} className="link">
         <p>Já tem uma conta? Faça login!</p>
