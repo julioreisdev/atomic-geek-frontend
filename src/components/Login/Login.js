@@ -2,13 +2,13 @@ import styled from "styled-components";
 import logo from "../../assets/img/logo.gif";
 import { useContext, useState } from "react";
 import dadosUser from "../Context/Context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoaderBotao from "../Loader/LoaderBotao";
 
 export default function Login() {
   const { email, setEmail, senha, setSenha, setToken, setNome } = useContext(dadosUser);
-
+  const navigate = useNavigate();
   const [erroLogin, setErroLogin] = useState(false);
   const [tap, setTap] = useState(false);
 
@@ -25,6 +25,7 @@ export default function Login() {
         setToken(res.data.token);
         setErroLogin(false);
         setTap(false);
+        navigate("/home");
       })
       .catch((err) => {
         setErroLogin(true);
