@@ -4,6 +4,14 @@ import { useContext } from "react";
 import dadosUser from "../Context/Context";
 import { Link } from "react-router-dom";
 
+function Category(props) {
+    return(
+        <div>
+            <h3>{props.name}</h3>
+        </div>
+    )
+}
+
 export default function Home() {
     //LOGIC
     const { nome } = useContext(dadosUser);
@@ -17,10 +25,21 @@ export default function Home() {
                 </LeftTop>
                 <RightTop>
                     <ion-icon name="cart"></ion-icon>
-                    <ion-icon name="exit"></ion-icon>
+                    <Link to="/login">
+                        <ion-icon name="exit"></ion-icon>
+                    </Link>
                 </RightTop>
             </Top>
-            <span></span>
+            <Categories>
+                <Category name="Notebook"/>
+                <Category name="Perifericos"/>
+                <Category name="Monitores"/>
+                <Category name="PC Gamer"/>
+                <Category name="Cadeira Gamer"/>
+            </Categories>
+            <Content>
+
+            </Content>
         </Container>
     )
 }
@@ -29,11 +48,10 @@ const Container = styled.div `
     width: 100%;
     min-height: 100vh;
     background-color: #010203;
-
     span {
-        height: 0.2rem;
-        margin-top: 1rem;
-        background-color: #14ffa7;
+        width: 100%;
+        height: 2rem;
+        border: #14ffa7;
     }
 `;
 
@@ -70,4 +88,40 @@ const RightTop = styled.div `
         font-size: 30px;
         margin-left: 1rem;     
     }
+`;
+
+const Categories = styled.div `
+    margin-top: 3rem;
+    display: flex;
+    overflow-x: scroll;
+    div {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        border-radius: 5rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+        background-color: #14ffa7;
+        height: 2rem;
+        min-width: 6rem;
+        h3 {
+            font-family: "Press Start 2P", cursive;
+            font-size: 0.5rem;
+            color: #010203;
+        }
+    }
+    div:hover {
+        h3 {
+            color: #ffffff;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        display: none;  
+    }
+`;
+
+const Content = styled.div `
+
 `;
