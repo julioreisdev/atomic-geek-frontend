@@ -13,6 +13,7 @@ export default function App() {
   const [senha, setSenha] = useState("");
   const [cep, setCep] = useState("");
   const [rua, setRua] = useState("");
+  const [token, setToken] = useState("");
 
   return (
     <BrowserRouter>
@@ -28,6 +29,8 @@ export default function App() {
           setCep,
           rua,
           setRua,
+          token,
+          setToken,
         }}
       >
         <Routes>
