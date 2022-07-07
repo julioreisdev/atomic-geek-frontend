@@ -14,6 +14,7 @@ export default function App() {
   const [cep, setCep] = useState("");
   const [rua, setRua] = useState("");
   const [token, setToken] = useState("");
+  const [produtos, setProdutos] = useState([]);
 
   return (
     <BrowserRouter>
@@ -31,6 +32,8 @@ export default function App() {
           setRua,
           token,
           setToken,
+          produtos,
+          setProdutos
         }}
       >
         <Routes>

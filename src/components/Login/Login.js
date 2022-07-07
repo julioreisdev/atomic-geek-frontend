@@ -7,7 +7,7 @@ import axios from "axios";
 import LoaderBotao from "../Loader/LoaderBotao";
 
 export default function Login() {
-  const { email, setEmail, senha, setSenha, setToken } = useContext(dadosUser);
+  const { email, setEmail, senha, setSenha, setToken, setNome } = useContext(dadosUser);
 
   const [erroLogin, setErroLogin] = useState(false);
   const [tap, setTap] = useState(false);
@@ -21,6 +21,7 @@ export default function Login() {
     });
     promise
       .then((res) => {
+        setNome(res.data.nome);
         setToken(res.data.token);
         setErroLogin(false);
         setTap(false);

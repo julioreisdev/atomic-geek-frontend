@@ -1,20 +1,20 @@
 import styled from "styled-components";
-import logo from "../../assets/img/logo.gif";
 import { useContext } from "react";
 import dadosUser from "../Context/Context";
 import { Link } from "react-router-dom";
+import Product from "./Product";
 
-function Category(props) {
+function Category({ name }) {
     return(
         <div>
-            <h3>{props.name}</h3>
+            <h3>{name}</h3>
         </div>
     )
 }
 
 export default function Home() {
     //LOGIC
-    const { nome } = useContext(dadosUser);
+    const { nome, token, produtos, setProdutos } = useContext(dadosUser);
     //UI
     return (
         <Container>
@@ -38,7 +38,7 @@ export default function Home() {
                 <Category name="Cadeira Gamer"/>
             </Categories>
             <Content>
-
+                {produtos.length === 0 ? <p>Não há produtos disponíveis no momento</p> : produtos.map((response, index) => <Product key={index} image={response.url} price={response.preco} name={response.nome}/>)}
             </Content>
         </Container>
     )
@@ -92,6 +92,7 @@ const RightTop = styled.div `
 
 const Categories = styled.div `
     margin-top: 3rem;
+    margin-bottom: 3rem;
     display: flex;
     overflow-x: scroll;
     div {
@@ -104,16 +105,17 @@ const Categories = styled.div `
         text-align: center;
         background-color: #14ffa7;
         height: 2rem;
-        min-width: 6rem;
+        min-width: 6.5rem;
         h3 {
             font-family: "Press Start 2P", cursive;
-            font-size: 0.5rem;
+            font-size: 0.6rem;
             color: #010203;
         }
     }
     div:hover {
         h3 {
             color: #ffffff;
+            cursor: pointer;
         }
     }
 
@@ -123,5 +125,14 @@ const Categories = styled.div `
 `;
 
 const Content = styled.div `
+    p {
+        font-family: "Press Start 2P", cursive;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 23px;
+        text-align: center;
+        color: #14ffa7;
+        margin: 200px 73px;
+    }
 
 `;
