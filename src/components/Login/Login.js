@@ -1,19 +1,43 @@
 import styled from "styled-components";
 import logo from "../../assets/img/logo.gif";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import dadosUser from "../Context/Context";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import LoaderBotao from "../Loader/LoaderBotao";
 
 export default function Login() {
-  const { email, setEmail, senha, setSenha } = useContext(dadosUser);
+  const { email, setEmail, senha, setSenha, setToken } = useContext(dadosUser);
+
+  const [erroLogin, setErroLogin] = useState(false);
+  const [tap, setTap] = useState(false);
+
+  function submit(e) {
+    e.preventDefault();
+    setTap(true);
+    const promise = axios.post("http://localhost:5000/login", {
+      email,
+      senha,
+    });
+    promise
+      .then((res) => {
+        setToken(res.data.token);
+        setErroLogin(false);
+        setTap(false);
+      })
+      .catch((err) => {
+        setErroLogin(true);
+        setTap(false);
+      });
+  }
 
   return (
-    <Container>
+    <Container corBordas={erroLogin ? "red" : "#fff"}>
       <Logo>
         <img src={logo} alt="Logo Atomic Geek" />
         <h1>Atomic Geek</h1>
       </Logo>
-      <form>
+      <form onSubmit={(e) => submit(e)}>
         <input
           id="email"
           name="email"
@@ -32,7 +56,7 @@ export default function Login() {
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
         />
-        <button>Entrar</button>
+        <button>{tap ? <LoaderBotao w="40" h="20" /> : "Entrar"}</button>
       </form>
       <Link to={"/register"} className="link">
         <p>Cadastre-se!</p>
@@ -78,6 +102,10 @@ const Container = styled.div`
     input::placeholder,
     input {
       font-size: 1.3rem;
+    }
+
+    input {
+      border: 2px solid ${(props) => props.corBordas};
     }
 
     button {
