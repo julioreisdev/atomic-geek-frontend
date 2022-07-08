@@ -65,7 +65,7 @@ export default function Home() {
                 <Category name="Cadeira Gamer" totalProdutos={totalProdutos} setProdutos={setProdutos}/>
             </Categories>
             <Content>
-                {produtos.length === 0 ? <p>Não há produtos disponíveis no momento</p> : produtos.map((response, index) => <Product key={index} image={response.url} price={response.preco} name={response.nome}/>)}
+                {produtos.length === 0 ? <p>Não há produtos disponíveis no momento</p> : produtos.map((response, index) => <Product key={index} idProduct={response._id} image={response.url} price={response.preco} name={response.nome} token={token}/>)}
             </Content>
         </Container>
     )
