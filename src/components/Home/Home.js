@@ -1,76 +1,72 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import dadosUser from "../Context/Context";
 import { Link, useNavigate } from "react-router-dom";
 import Product from "./Product";
 
-function Category({ name }) {
-  return (
-    <div>
-      <h3>{name}</h3>
-    </div>
-  );
+function Category({ name, totalProdutos, setProdutos }) {
+    //LOGIC
+    function escolherCategoria() {
+        const arrayCategoria = totalProdutos.filter(response => response.categoria === name);
+        setProdutos(arrayCategoria);
+    }
+    //UI
+    return(
+        <div onClick={escolherCategoria}>
+            <h3>{name}</h3>
+        </div>
+    )
 }
 
 export default function Home() {
-  //LOGIC
-  const { nome, token, produtos, setProdutos } = useContext(dadosUser);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const promise = axios.get("http://localhost:5000/home", config);
-    promise.then((response) => {
-      setProdutos(response.data);
-    });
-    promise.catch(() => {
-      alert("A conexão com o servidor foi perdida, faça o login novamente");
-      navigate("/login");
-    });
-  }, []);
-  //UI
-  return (
-    <Container>
-      <Top>
-        <LeftTop>
-          <ion-icon name="person-sharp"></ion-icon>
-          <h1>{nome}</h1>
-        </LeftTop>
-        <RightTop>
-          <ion-icon name="cart"></ion-icon>
-          <Link to="/login">
-            <ion-icon name="exit"></ion-icon>
-          </Link>
-        </RightTop>
-      </Top>
-      <Categories>
-        <Category name="Notebook" />
-        <Category name="Perifericos" />
-        <Category name="Monitores" />
-        <Category name="PC Gamer" />
-        <Category name="Cadeira Gamer" />
-      </Categories>
-      <Content>
-        {produtos.length === 0 ? (
-          <p>Não há produtos disponíveis no momento</p>
-        ) : (
-          produtos.map((response, index) => (
-            <Product
-              key={index}
-              image={response.url}
-              price={response.preco}
-              name={response.nome}
-            />
-          ))
-        )}
-      </Content>
-    </Container>
-  );
+    //LOGIC
+    const { nome, token, produtos, setProdutos } = useContext(dadosUser);
+    const [totalProdutos, setTotalProdutos] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        const promise = axios.get("http://localhost:5000/home", config);
+        promise.then((response) => {
+            setProdutos(response.data);
+            setTotalProdutos(response.data);
+        })
+        promise.catch(() => {
+            alert("A conexão com o servidor foi perdida, faça o login novamente");
+            navigate("/login"); 
+        })
+    }, []);
+    //UI
+    return (
+        <Container>
+            <Top>
+                <LeftTop>
+                    <ion-icon name="person-sharp"></ion-icon>
+                    <h1>{nome}</h1>
+                </LeftTop>
+                <RightTop>
+                    <ion-icon name="cart"></ion-icon>
+                    <Link to="/login">
+                        <ion-icon name="exit"></ion-icon>
+                    </Link>
+                </RightTop>
+            </Top>
+            <Categories>
+                <Category name="Notebook" totalProdutos={totalProdutos} setProdutos={setProdutos}/>
+                <Category name="Perifericos" totalProdutos={totalProdutos} setProdutos={setProdutos}/>
+                <Category name="Monitores" totalProdutos={totalProdutos} setProdutos={setProdutos}/>
+                <Category name="PC Gamer" totalProdutos={totalProdutos} setProdutos={setProdutos}/>
+                <Category name="Cadeira Gamer" totalProdutos={totalProdutos} setProdutos={setProdutos}/>
+            </Categories>
+            <Content>
+                {produtos.length === 0 ? <p>Não há produtos disponíveis no momento</p> : produtos.map((response, index) => <Product key={index} idProduct={response._id} image={response.url} price={response.preco} name={response.nome} token={token}/>)}
+            </Content>
+        </Container>
+    )
 }
 
 const Container = styled.div`
