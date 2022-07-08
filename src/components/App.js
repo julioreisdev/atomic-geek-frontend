@@ -6,6 +6,7 @@ import "../assets/css/style.css";
 import Login from "./Login/Login";
 import Cadastro from "./Cadastro/Cadastro";
 import Home from "./Home/Home";
+import Carrinho from "./Carrinho/Carrinho";
 
 export default function App() {
   const [nome, setNome] = useState("");
@@ -33,7 +34,7 @@ export default function App() {
           token,
           setToken,
           produtos,
-          setProdutos
+          setProdutos,
         }}
       >
         <Routes>
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Cadastro />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/carrinho" element={<Carrinho />} />
         </Routes>
       </dadosUser.Provider>
     </BrowserRouter>
