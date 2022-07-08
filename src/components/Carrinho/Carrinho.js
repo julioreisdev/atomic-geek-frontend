@@ -1,7 +1,63 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import dadosUser from "../Context/Context";
+import axios from "axios";
 
 export default function Carrinho() {
+  const { token } = useContext(dadosUser);
+  const [total, setTotal] = useState("");
+  const [produtos, setProdutos] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  useEffect(() => {
+    const promise = axios.get("http://localhost:5000/carts", config);
+    promise
+      .then((res) => {
+        setTotal(res.data.total);
+        setProdutos(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [refresh]);
+
+  function Item(props) {
+    function remove(id) {
+      const confirm = window.confirm("Deseja remover o ítem do carrinho?");
+      if (confirm) {
+        const promise = axios.post(
+          "http://localhost:5000/deleteCarts",
+          { idProduct: id },
+          config
+        );
+        promise
+          .then((res) => {
+            setRefresh(!refresh);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      }
+    }
+    return (
+      <Produto>
+        <img src={props.img} alt="Foto produto" />
+        <p>{props.nome}</p>
+        <p>R$ {props.valor}</p>
+        <RemoveItem onClick={() => remove(props.id)}>
+          <ion-icon name="close-circle-outline"></ion-icon>
+        </RemoveItem>
+      </Produto>
+    );
+  }
+
   return (
     <Container>
       <Header>
@@ -14,38 +70,28 @@ export default function Carrinho() {
         </Link>
       </Header>
       <Produtos>
-        <Produto>
-          <img
-            src="https://media.istockphoto.com/photos/green-gaming-mouse-on-stone-texture-table-picture-id1197265704?b=1&k=20&m=1197265704&s=170667a&w=0&h=SVAlwsKsBLgtHEBY7jOveT9C6gLaKX6RLJzqbzzmEwo="
-            alt="Foto produto"
+        {produtos.map((p, index) => (
+          <Item
+            key={index}
+            img={p.url}
+            nome={p.nome}
+            valor={p.preco}
+            id={p._id}
           />
-          <p>Descrição</p>
-          <p>R$ 00</p>
-          <RemoveItem onClick={() => console.log("Click")}>
-            <ion-icon name="close-circle-outline"></ion-icon>
-          </RemoveItem>
-        </Produto>
-        <Produto>
-          <img
-            src="https://media.istockphoto.com/photos/green-gaming-mouse-on-stone-texture-table-picture-id1197265704?b=1&k=20&m=1197265704&s=170667a&w=0&h=SVAlwsKsBLgtHEBY7jOveT9C6gLaKX6RLJzqbzzmEwo="
-            alt="Foto produto"
-          />
-          <p>Descrição</p>
-          <p>R$ 00</p>
-          <RemoveItem onClick={() => console.log("Click")}>
-            <ion-icon name="close-circle-outline"></ion-icon>
-          </RemoveItem>
-        </Produto>
+        ))}
       </Produtos>
-      <Footer>
-        <form>
-          <button>Comprar</button>
-        </form>
-        <div>
-          <p>Total:</p>
-          <p>R$ 00</p>
-        </div>
-      </Footer>
+      <h3>{produtos.length === 0 ? "Carrinho vazio :(" : null}</h3>
+      {produtos.length > 0 ? (
+        <Footer>
+          <form>
+            <button>Comprar</button>
+          </form>
+          <div>
+            <p>Total:</p>
+            <p>R$ {total}</p>
+          </div>
+        </Footer>
+      ) : null}
     </Container>
   );
 }
@@ -58,6 +104,12 @@ const Container = styled.div`
   background-color: #010203;
   font-family: "Space Mono", monospace;
   color: #14ffa7;
+
+  h3 {
+    text-align: center;
+    font-size: 1rem;
+    font-family: "Press Start 2P", cursive !important;
+  }
 `;
 
 const Header = styled.header`
