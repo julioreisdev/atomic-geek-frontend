@@ -42,7 +42,7 @@ export default function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Cadastro />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/carrinho" element={<Carrinho />} />
+          <Route path="/carts" element={<Carrinho />} />
         </Routes>
       </dadosUser.Provider>
     </BrowserRouter>

@@ -44,9 +44,10 @@ const ProductInformation = styled.div `
         border-radius: 5px;
     }
     div {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         position: relative;
         h4 {
             font-family: "Space Mono", monospace;
@@ -65,7 +66,7 @@ const ProductInformation = styled.div `
             position: absolute;
             font-size: 2rem;
             right: 1rem;
-            bottom: 0.5rem;
+            bottom: 0;
         }
     }
 `;
