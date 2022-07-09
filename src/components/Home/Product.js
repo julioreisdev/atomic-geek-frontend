@@ -29,7 +29,7 @@ export default function Product({ image, price, name, token, idProduct }) {
       <img src={image} alt="Imagem do produto" />
       <div>
         <h4>{name}</h4>
-        <h5>R${price}</h5>
+        <h5>R${price.replace(".", ",")}</h5>
         <ion-icon onClick={adicionarCarrinho} name="bag"></ion-icon>
       </div>
     </ProductInformation>
@@ -58,20 +58,22 @@ const ProductInformation = styled.div`
       font-family: "Space Mono", monospace;
       font-weight: 700;
       font-size: 1rem;
+      margin-top: 0.5rem;
       color: #14ffa7;
     }
     h5 {
       font-family: "Space Mono", monospace;
       font-weight: 700;
       font-size: 1rem;
+      margin-bottom: 0.5rem;
       color: #14ffa7;
     }
     ion-icon {
       color: #14ffa7;
       position: absolute;
       font-size: 2rem;
-      right: 1rem;
-      bottom: 0;
+      right: 0.5rem;
+      bottom: 0.5rem;
     }
   }
 `;

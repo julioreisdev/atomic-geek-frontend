@@ -12,14 +12,10 @@ export default function Cadastro() {
     setEmail,
     senha,
     setSenha,
-    nome,
-    setNome,
-    cep,
-    setCep,
-    rua,
-    setRua,
   } = useContext(dadosUser);
-
+  const [nome, setNome] = useState("");
+  const [cep, setCep] = useState("");
+  const [rua, setRua] = useState("");
   const [mensagemErro, setMesangemErro] = useState("");
   const [tap, setTap] = useState(false);
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import dadosUser from "../Context/Context";
 import axios from "axios";
@@ -9,6 +9,7 @@ export default function Carrinho() {
   const [total, setTotal] = useState("");
   const [produtos, setProdutos] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const navigate = useNavigate();
 
   const config = {
     headers: {
@@ -24,7 +25,8 @@ export default function Carrinho() {
         setProdutos(res.data.products);
       })
       .catch((err) => {
-        console.log(err);
+        alert("A conexão com o servidor foi perdida, faça o login novamente");
+        navigate("/login");
       });
   }, [refresh]);
 
@@ -50,7 +52,7 @@ export default function Carrinho() {
       <Produto>
         <img src={props.img} alt="Foto produto" />
         <p>{props.nome}</p>
-        <p>R$ {props.valor}</p>
+        <p>R${props.valor.replace(".", ",")}</p>
         <RemoveItem onClick={() => remove(props.id)}>
           <ion-icon name="close-circle-outline"></ion-icon>
         </RemoveItem>
@@ -88,7 +90,7 @@ export default function Carrinho() {
           </form>
           <div>
             <p>Total:</p>
-            <p>R$ {total}</p>
+            <p>R${total.toFixed(2).toString().replace(".", ",")}</p>
           </div>
         </Footer>
       ) : null}
@@ -167,6 +169,9 @@ const Footer = styled.footer`
     background-color: #14ffa7;
     border: 2px solid #010203;
     font-weight: bold;
+  }
+  button:hover {
+    color: #ffffff;
   }
 `;
 

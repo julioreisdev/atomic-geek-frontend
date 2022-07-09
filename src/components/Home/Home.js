@@ -8,10 +8,14 @@ import Product from "./Product";
 function Category({ name, totalProdutos, setProdutos }) {
   //LOGIC
   function escolherCategoria() {
-    const arrayCategoria = totalProdutos.filter(
-      (response) => response.categoria === name
-    );
-    setProdutos(arrayCategoria);
+    if( name === "Tudo") {
+      setProdutos(totalProdutos);
+    } else {
+      const arrayCategoria = totalProdutos.filter(
+        (response) => response.categoria === name
+      );
+      setProdutos(arrayCategoria);
+    }
   }
   //UI
   return (
@@ -60,6 +64,11 @@ export default function Home() {
         </RightTop>
       </Top>
       <Categories>
+        <Category
+          name="Tudo"
+          totalProdutos={totalProdutos}
+          setProdutos={setProdutos}
+        />
         <Category
           name="Notebook"
           totalProdutos={totalProdutos}
@@ -166,7 +175,7 @@ const Categories = styled.div`
     text-align: center;
     background-color: #14ffa7;
     height: 2rem;
-    min-width: 6.5rem;
+    min-width: 7rem;
     h3 {
       font-family: "Press Start 2P", cursive;
       font-size: 0.6rem;

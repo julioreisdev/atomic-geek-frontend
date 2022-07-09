@@ -25,6 +25,8 @@ export default function Login() {
         setToken(res.data.token);
         setErroLogin(false);
         setTap(false);
+        setEmail("");
+        setSenha("");
         navigate("/home");
       })
       .catch((err) => {

@@ -1,5 +1,5 @@
 import dadosUser from "./Context/Context";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
 import "../assets/css/reset.css";
 import "../assets/css/style.css";
@@ -12,11 +12,8 @@ export default function App() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [cep, setCep] = useState("");
-  const [rua, setRua] = useState("");
   const [token, setToken] = useState("");
   const [produtos, setProdutos] = useState([]);
-
   return (
     <BrowserRouter>
       <dadosUser.Provider
@@ -27,10 +24,6 @@ export default function App() {
           setEmail,
           senha,
           setSenha,
-          cep,
-          setCep,
-          rua,
-          setRua,
           token,
           setToken,
           produtos,
@@ -38,8 +31,8 @@ export default function App() {
         }}
       >
         <Routes>
+          <Route path="/" element={<Navigate replace to="/login" />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Cadastro />} />
           <Route path="/home" element={<Home />} />
           <Route path="/carts" element={<Carrinho />} />
