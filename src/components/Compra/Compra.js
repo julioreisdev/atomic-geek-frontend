@@ -44,7 +44,7 @@ export default function Compra() {
 			valorTotal: Number(total).toFixed(2).toString(),
 			pagamento: selecionarPagamento
 		}
-		const promise = axios.post("http://localhost:5000/purchase");
+		const promise = axios.post("http://localhost:5000/purchase", body, config);
 		promise.then((response) => {
       alert("Compra realizada com sucesso");
 			navigate("/home");
