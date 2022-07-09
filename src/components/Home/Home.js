@@ -63,6 +63,7 @@ export default function Home() {
           </Link>
         </RightTop>
       </Top>
+      <span></span>
       <Categories>
         <Category
           name="Tudo"
@@ -119,11 +120,6 @@ const Container = styled.div`
   width: 100%;
   min-height: 100vh;
   background-color: #010203;
-  span {
-    width: 100%;
-    height: 2rem;
-    border: #14ffa7;
-  }
 `;
 
 const Top = styled.div`
@@ -139,15 +135,15 @@ const LeftTop = styled.div`
   display: flex;
   ion-icon {
     color: #14ffa7;
-    font-size: 28px;
+    font-size: 1.75rem;
     margin-right: 1rem;
   }
 
   h1 {
     font-family: "Space Mono", monospace;
     font-weight: 700;
-    font-size: 22px;
-    line-height: 31px;
+    font-size: 1.4rem;
+    line-height: 2rem;
     color: #14ffa7;
   }
 `;
@@ -155,16 +151,19 @@ const LeftTop = styled.div`
 const RightTop = styled.div`
   ion-icon {
     color: #14ffa7;
-    font-size: 30px;
+    font-size: 1.9rem;
     margin-left: 1rem;
   }
 `;
 
 const Categories = styled.div`
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   display: flex;
   overflow-x: scroll;
+  box-shadow: 0 1px 5px #14ffa7;
   div {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
@@ -197,10 +196,10 @@ const Content = styled.div`
   p {
     font-family: "Press Start 2P", cursive;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 23px;
+    font-size: 1.25rem;
+    line-height: 1.4rem;
     text-align: center;
     color: #14ffa7;
-    margin: 200px 73px;
+    margin: 12.5rem 4.6rem;
   }
 `;

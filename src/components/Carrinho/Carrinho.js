@@ -86,11 +86,13 @@ export default function Carrinho() {
       {produtos.length > 0 ? (
         <Footer>
           <form>
-            <button>Comprar</button>
+            <Link to="/purchase">
+              <button>Comprar</button>
+            </Link>
           </form>
           <div>
             <p>Total:</p>
-            <p>R${total.toFixed(2).toString().replace(".", ",")}</p>
+            <p>R${Number(total).toFixed(2).toString().replace(".", ",")}</p>
           </div>
         </Footer>
       ) : null}
