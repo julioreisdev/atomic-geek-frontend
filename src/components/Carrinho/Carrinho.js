@@ -25,8 +25,7 @@ export default function Carrinho() {
         setProdutos(res.data.products);
       })
       .catch((err) => {
-        alert("A conexão com o servidor foi perdida, faça o login novamente");
-        navigate("/login");
+        console.log(err);
       });
   }, [refresh]);
 
