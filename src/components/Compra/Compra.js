@@ -44,7 +44,7 @@ export default function Compra() {
 			valorTotal: Number(total).toFixed(2).toString(),
 			pagamento: selecionarPagamento
 		}
-		const promise = axios.post("http://localhost:5000/purchase", body, config);
+		const promise = axios.post("https://atomicgeek.herokuapp.com/purchase", body, config);
 		promise.then((response) => {
       alert("Compra realizada com sucesso");
 			navigate("/home");
@@ -56,7 +56,7 @@ export default function Compra() {
 	}
 
   useEffect(() => {
-    const promise = axios.get("http://localhost:5000/carts", config);
+    const promise = axios.get("https://atomicgeek.herokuapp.com/carts", config);
     promise
       .then((res) => {
         setTotal(res.data.total);

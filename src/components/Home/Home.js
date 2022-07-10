@@ -36,7 +36,7 @@ export default function Home() {
         Authorization: `Bearer ${token}`,
       },
     };
-    const promise = axios.get("http://localhost:5000/home", config);
+    const promise = axios.get("https://atomicgeek.herokuapp.com/home", config);
     promise.then((response) => {
       setProdutos(response.data);
       setTotalProdutos(response.data);

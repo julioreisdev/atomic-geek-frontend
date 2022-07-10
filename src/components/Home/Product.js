@@ -13,7 +13,7 @@ export default function Product({ image, price, name, token, idProduct }) {
         },
       };
       const body = { idProduct };
-      const promise = axios.post("http://localhost:5000/home", body, config);
+      const promise = axios.post("https://atomicgeek.herokuapp.com/home", body, config);
       promise.then((response) => {
         console.log("Produto enviado pro carrinho");
       });

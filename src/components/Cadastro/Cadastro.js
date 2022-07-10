@@ -23,7 +23,7 @@ export default function Cadastro() {
   function submit(e) {
     e.preventDefault();
     setTap(true);
-    const promise = axios.post("http://localhost:5000/register", {
+    const promise = axios.post("https://atomicgeek.herokuapp.com/register", {
       nome,
       email,
       senha,

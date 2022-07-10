@@ -15,7 +15,7 @@ export default function Login() {
   function submit(e) {
     e.preventDefault();
     setTap(true);
-    const promise = axios.post("http://localhost:5000/login", {
+    const promise = axios.post("https://atomicgeek.herokuapp.com/login", {
       email,
       senha,
     });
