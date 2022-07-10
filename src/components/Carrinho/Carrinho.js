@@ -18,7 +18,7 @@ export default function Carrinho() {
   };
 
   useEffect(() => {
-    const promise = axios.get("http://localhost:5000/carts", config);
+    const promise = axios.get("https://atomicgeek.herokuapp.com/carts", config);
     promise
       .then((res) => {
         setTotal(res.data.total);
@@ -34,7 +34,7 @@ export default function Carrinho() {
       const confirm = window.confirm("Deseja remover o ítem do carrinho?");
       if (confirm) {
         const promise = axios.post(
-          "http://localhost:5000/deleteCarts",
+          "https://atomicgeek.herokuapp.com/deleteCarts",
           { idProduct: id },
           config
         );
